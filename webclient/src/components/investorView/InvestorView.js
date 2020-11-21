@@ -36,7 +36,7 @@ const InvestorView = () => {
   const history = useHistory();
 
   function addInvestor() {
-    history.push('/newinvestor')
+    history.push('/investor')
   }
 
   function investorClicked(investorId) {

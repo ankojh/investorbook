@@ -44,7 +44,7 @@ const CompanyView = () => {
 
 
   function addCompany() {
-    history.push('/newcompany')
+    history.push('/company')
   }
 
   function investorClicked(investorId) {
@@ -66,7 +66,8 @@ const CompanyView = () => {
   }
 
   function addInvestmentClicked(companyId){
-    history.push(`/newinvestment?company=${companyId}`);
+    alert('TODO')
+    // history.push(`/investment?company=${companyId}`);
   }
 
 

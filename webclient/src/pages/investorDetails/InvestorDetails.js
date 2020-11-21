@@ -33,15 +33,24 @@ mutation DeleteInvestor($id: Int) {
 `;
 
 
+const DELETE_INVESTMENT = gql`
+mutation DeleteInvestment($id: Int) {
+  delete_investment(where: {id: {_eq: $id}}){
+     affected_rows
+  }
+}
+`;
+
+
 const InvestorDetails = (props) => {
   const { id: investorId } = useParams();
   const { loading, error, data } = useQuery(GET_INVESTOR_DETAILS, { variables: { id: investorId } });
   const history = useHistory()
 
-  const [showDialog, setShowDialog] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
   const [deleting, setDeleting] = useState({id: null, type: 'Investor'});
   const [deleteInvestorMutation] = useMutation(DELETE_INVESTOR);
-  // const [deleteInvestmentMutation] = useMutation(DELETE_INVESTMENT);
+  const [deleteInvestmentMutation] = useMutation(DELETE_INVESTMENT);
   const [isInvestorEditing, setIsInvestorEditing] = useState(false);
 
   function companyClicked(companyId){
@@ -50,10 +59,13 @@ const InvestorDetails = (props) => {
 
   function deleteInvestment(investmentId){
     setDeleting({type:'Investment', id: investmentId});
+    console.log('here');
     setShowDialog(true);
   }
 
   function editInvestment(investmentId){
+    alert('TODO')
+    // history.push(`/investment?edit=${investmentId}`)
   }
 
   function deleteInvestor(){
@@ -62,7 +74,7 @@ const InvestorDetails = (props) => {
   }
 
   function editInvestor(){
-    setIsInvestorEditing(true);
+    history.push(`/investor?edit=${investorId}`)
   }
 
   function handleCancel(){
@@ -70,8 +82,12 @@ const InvestorDetails = (props) => {
   }
 
   function handleOk(){
-    console.log('called')
-    deleteInvestorMutation({variables: {id: deleting.id}});
+    if(deleting.type === 'Investor'){
+      deleteInvestorMutation({ variables: { id: deleting.id } });
+    }
+    else{
+      deleteInvestmentMutation({ variables: { id: deleting.id } });
+    }
     setShowDialog(false);
   }
 
@@ -126,8 +142,8 @@ const InvestorDetails = (props) => {
           <span className="investordetails-company" onClick={e => companyClicked(investment.company.id)}>
             {investment.company.name}: </span> <span >${investment.amount}
             <span className="investordetails-options">
-              <img onClick={e => deleteInvestment(investment.id)} className="investordetails-icon" src={updateIcon} width='20px' alt="update" />
-              <img onClick={e=>editInvestment(investment.id)} className="investordetails-icon" src={deleteIcon} width='20px' alt="delete" />
+              <img onClick={e => editInvestment(investment.id)} className="investordetails-icon" src={updateIcon} width='20px' alt="update" />
+              <img onClick={e => deleteInvestment(investment.id)} className="investordetails-icon" src={deleteIcon} width='20px' alt="delete" />
             </span>
             </span>
         </div>

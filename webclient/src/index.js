@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import ResizeContextProvider from './contexts/resizeContext';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8091/v1/graphql',
@@ -16,7 +17,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ResizeContextProvider>
-      <App />
+        <Router>
+          <App />
+        </Router>
       </ResizeContextProvider>
     </ApolloProvider>
   </React.StrictMode>,

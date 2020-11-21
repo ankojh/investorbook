@@ -8,3 +8,7 @@
   font-size: 25px;
   font-weight: bolder;
 }
+
+.App-Title{
+  cursor: pointer;
+}

@@ -62,3 +62,21 @@
   font-weight: bolder;
   margin:30px;
 }
+
+.companydetails-icon{
+  cursor: pointer;
+  margin-bottom: -2px;
+}
+
+.card-option{
+  margin-left: auto;
+  visibility: hidden;
+  opacity: 0;
+}
+
+
+.investor-card:hover .card-option {
+  transition: all 0.3s;
+  visibility: visible;
+  opacity: 1;
+}
