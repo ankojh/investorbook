@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import './InvestorDetails.css'
 
 const GET_INVESTOR_DETAILS = gql`
 query MyQuery ($id: Int){
@@ -24,27 +25,32 @@ query MyQuery ($id: Int){
 const InvestorDetails = () => {
   const { id: investorId } = useParams();
   const { loading, error, data } = useQuery(GET_INVESTOR_DETAILS, { variables: { id: investorId } });
+  const history = useHistory()
+
+  function companyClicked(companyId){
+    history.push(`/company/${companyId}`)
+  }
 
 
   if(loading){
-    return <div></div>
+    return <div>Loading</div>
   }
 
   if(error){
-    return <div></div>
+    return <div>Error</div>
   }
 
   const investor = data.investor[0];
 
   return (
     <div className="App-InvestorDetails">
-      <div>Go Back To All Investors</div>
-      <img src={investor.photo_large} alt='' width="100px" height="100px" />
-      <div>Name: <span>{investor.name}</span></div>
-      <div>Investments:</div>
+      <div className="investordetails-header">Investor</div>
+      <img className="investordetails-avatar" src={investor.photo_large} alt={investor.name} width="300px" height="300px" />
+      <div className="investordetails-name">Name: <span>{investor.name}</span></div>
+      <div className="investordetails-investment-header">Investments:</div>
       {investor.investments.map(investment=>
-        <div key={investment.id}>
-          <span>{investment.company.name}: </span> <span>${investment.amount}</span>
+        <div className="investordetails-investment" key={investment.id}>
+          <span className="investordetails-company" onClick={e => companyClicked(investment.company.id)}>{investment.company.name}: </span> <span >${investment.amount}</span>
         </div>
       )}
     </div>

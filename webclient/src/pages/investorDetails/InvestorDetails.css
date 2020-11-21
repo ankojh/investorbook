@@ -1,0 +1,47 @@
+.App-InvestorDetails{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin:15px;
+}
+
+.investordetails-header{
+  font-size:25px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.investordetails-avatar{
+  border-radius: 50%;
+  margin:20px;
+}
+
+.investordetails-name{
+  font-size:18px
+}
+
+.investordetails-name span{
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.investordetails-investment-header{
+  font-size:20px;
+  margin-top:30px;
+  margin-bottom:10px;
+  font-weight: bolder;
+
+}
+
+.investordetails-investment{
+  margin:10px;
+  padding:10px;
+  border: 2px solid #4050B5;
+  min-width: 300px;
+  text-align: center;
+  border-radius: 8px;
+}
+.investordetails-company{
+  color:#4050B5;
+  cursor: pointer;
+}

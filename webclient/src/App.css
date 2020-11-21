@@ -4,7 +4,7 @@
 }
 
 
-.App.wide-screen {
-  /* width: 740px; */
-  margin: auto;
+.App-header{
+  font-size: 25px;
+  font-weight: bolder;
 }

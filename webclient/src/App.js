@@ -26,7 +26,7 @@ function App() {
   return (
     <Router>
       <div className={`App ${isWideScreen ? 'wide-screen' : ''}`}>
-        <AppBar position="static">
+        <AppBar position="static" className="App-header">
           <Toolbar>
             InvestorBook
         </Toolbar>

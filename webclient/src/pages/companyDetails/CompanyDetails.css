@@ -1,0 +1,64 @@
+.App-CompanyDetails{
+  margin:15px;
+}
+
+.App-CompanyDetails .companydetails-header{
+  font-size: 24px;
+  font-weight: bolder;
+  margin-top:20px;
+}
+
+.App-CompanyDetails .companydetails-name{
+  font-size: 18px;
+  margin-top:15px;
+  margin-bottom:15px;
+  /* font-weight: bolder; */
+}
+
+.App-CompanyDetails .companydetails-stats{
+  font-size: 15px;
+}
+
+.investor-card{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "avatar name"
+                        "avatar amount";
+  margin:20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  gap: 20px;
+  border: 2px solid #4050B5;
+  max-width: 740px;
+  border-radius: 8px;
+}
+
+.investor-card:hover{
+  box-shadow: 0px 0px 10px rgb(194, 194, 194);
+}
+
+.investor-card-avatar {
+  grid-area: avatar;
+  border-radius: 50%;
+}
+
+.investor-card-name{
+  grid-area: name;
+  align-self: flex-end;
+}
+.investor-card-name span{
+  color: #4050B5;
+  cursor: pointer;
+}
+.investor-card-amount{
+  grid-area: amount;
+}
+
+.companydetails-investors{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  margin:30px;
+}
