@@ -1,0 +1,43 @@
+.addcompany-header{
+  text-align: center;
+  margin: 20px;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+
+.App-AddCompany{
+  text-align: center;
+}
+
+.addcompany-button{
+  outline:none;
+  border: none;
+  border: 1px solid #4050B5;
+  background: transparent;
+  padding: 5px;
+  margin:10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.addcompany-button:hover{
+  transition: all 0.3s;
+  color: white;
+  background-color: #4050B5;
+}
+
+
+.addcompany-name{
+  font-weight: bold;
+}
+
+.addcompany-name input{
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  border: 1px solid #4050B5;
+  font-size: 16px;;
+}

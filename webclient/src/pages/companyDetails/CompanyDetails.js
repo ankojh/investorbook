@@ -115,7 +115,7 @@ const CompanyDetails = () => {
       </div>
       <div className="companydetails-stats">Number of Investments: {companyDetails.investments.length}</div>
 
-      <div className="companydetails-companys">Investors</div>
+      <div className="companydetails-company">Investments</div>
       <div>
         {
           companyDetails.investments && companyDetails.investments.map(investment => <CompanyInvestorCard key={investment.id} setDeleting={setDeleting} setShowDialog={setShowDialog} investment={investment} />)
@@ -148,12 +148,12 @@ function CompanyInvestorCard({ investment, setDeleting, setShowDialog}) {
     <img className="investor-card-avatar" src={investment.investor.photo_thumbnail} alt={investment.investor.name} height="100px" />
     <div className='investor-card-name'>
         Name: <span onClick={e => investorClicked(investment.investor.id)} >{investment.investor.name}</span>
-        <span class="card-option"> 
-          <img onClick={e => editInvestment(investment.id)} className="companydetails-icon" src={updateIcon} width='20px' alt="update" />
-          <img onClick={e => deleteInvestment(investment.id)} className="companydetails-icon" src={deleteIcon} width='20px' alt="delete" />
-        </span>
         </div>
     <span className='investor-card-amount'>Amount: ${investment.amount}</span>
+    <span className="investor-card-option">
+      <img onClick={e => editInvestment(investment.id)} className="companydetails-icon" src={updateIcon} width='20px' alt="update" />
+      <img onClick={e => deleteInvestment(investment.id)} className="companydetails-icon" src={deleteIcon} width='20px' alt="delete" />
+    </span>
   </div>)
 }
 

@@ -21,10 +21,10 @@
 
 .investor-card{
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 100px 1fr 30px;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: "avatar name"
-                        "avatar amount";
+  grid-template-areas: "avatar name options" 
+                        "avatar amount options";
   margin:20px;
   margin-left: auto;
   margin-right: auto;
@@ -68,15 +68,24 @@
   margin-bottom: -2px;
 }
 
-.card-option{
+.investor-card-option{
   margin-left: auto;
   visibility: hidden;
   opacity: 0;
+  grid-area: options;
+  align-self: center;
 }
 
 
-.investor-card:hover .card-option {
+.investor-card:hover .investor-card-option {
   transition: all 0.3s;
   visibility: visible;
   opacity: 1;
+}
+
+.companydetails-company{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  margin:20px;
 }

@@ -51,7 +51,7 @@ const AddInvestor = () => {
   }
   return (
     <div>
-      <div>Add Investor</div>
+      <div className="addinvestor-header">Add Investor</div>
       <InvestorEditor onSave={onSave} />
     </div>
 
@@ -69,7 +69,7 @@ const EditInvestor = (props) => {
 
   return (
     <div>
-        <div>Edit Investor</div>
+        <div className="addinvestor-header">Edit Investor</div>
       <InvestorEditor name={data ? data.investor[0].name : ''} avatar={data ? data.investor[0].photo_large : ''} onSave={onSave} />
     </div>
   )
@@ -98,12 +98,11 @@ const InvestorEditor = (props) => {
 
   return (
     <div className="App-NewInvestor">
-      <div>Investor Panel</div>
-      <div>Name: <input onChange={e => setName(e.target.value)} value={name} /></div>
-      <div>Avatar URL: <input onChange={e => setAvatarURL(e.target.value)} value={avatarURL} /></div>
+      <div className="addinvestor-name">Name: <input onChange={e => setName(e.target.value)} value={name} /></div>
+      <div className="addinvestor-url">Avatar URL: <input onChange={e => setAvatarURL(e.target.value)} value={avatarURL} /></div>
       <div>
-        <button onClick={onCancelClicked}>Cancel</button>
-        <button onClick={onSaveClicked}>Save</button>
+        <button className="addinvestor-button" onClick={onCancelClicked}>Cancel</button>
+        <button className="addinvestor-button" onClick={onSaveClicked}>Save</button>
       </div>
     </div>
   );

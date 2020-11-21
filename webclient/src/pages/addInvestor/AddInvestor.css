@@ -1,0 +1,46 @@
+.App-NewInvestor {
+  text-align: center;
+}
+
+.addinvestor-header{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  margin: 20px;
+}
+
+.addinvestor-name{
+  font-weight: bold;
+}
+.addinvestor-button {
+  outline: none;
+  border: none;
+  border: 1px solid #4050B5;
+  background: transparent;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.addinvestor-button:hover {
+  transition: all 0.3s;
+  color: white;
+  background-color: #4050B5;
+}
+
+
+.addinvestor-url {
+  font-weight: bold;
+}
+
+.App-NewInvestor input{
+   padding: 10px;
+   margin: 10px;
+   border-radius: 20px;
+   outline: none;
+   border: none;
+   border: 1px solid #4050B5;
+   font-size: 16px;
+   ;
+}

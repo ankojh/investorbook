@@ -1,6 +1,7 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import './AddCompany.css'
 
 const GET_COMPANY = gql`
   query GetCompany($id:Int) {
@@ -21,7 +22,7 @@ mutation SetCompany($name: String) {
 
 const UPDATE_COMPANY = gql`
 mutation UpdateCompany($id: Int, $name: String) {
-  update_investor(where: {id: {_eq: $id}}, _set: {name: $name}) {
+  update_company(where: {id: {_eq: $id}}, _set: {name: $name}) {
     affected_rows
   }
 }
@@ -36,7 +37,7 @@ const Company = () => {
     return <EditCompany companyID={companyID} />
   }
   else {
-    return <AddCompany companyID={companyID} />
+    return <AddCompany />
   }
 }
 
@@ -45,30 +46,40 @@ const Company = () => {
 const AddCompany = () => {
 
     const [setCompany] = useMutation(SET_COMPANY);
+    const history = useHistory();
 
-    function onSave({name}){
-      setCompany({variables: {name}})
+    async function onSave({name}){
+      const id = await setCompany({variables: {name}})
+      history.push(`/company`)
+
     }
 
   return (
     <div>
-      <div>Add Company</div>
-      <CompanyEditor onSave={onSave}/>
+      <div className="addcompany-header">Add Company</div>
+      <CompanyEditor onSave={onSave} name={''}/>
     </div>
   )
 };
 
 
 const EditCompany = (props)=>{
+
+  const { loading, error, data } = useQuery(GET_COMPANY, { variables: { id: props.companyID } })
+
   const [updateCompany] = useMutation(UPDATE_COMPANY);
-  function onSave({name}){
-    updateCompany({id:props.id, name});
+  const history = useHistory();
+
+  async function onSave({name}){
+    await updateCompany({variables: { id: props.companyID, name}});
+    history.push(`/company/${props.companyID}`)
   }
+
 
   return (
     <div>
-      <div>Edit Company</div>
-      <CompanyEditor onSave={onSave} />
+      <div className="addcompany-header">Edit Company</div>
+      <CompanyEditor name={data ? data.company[0].name : ''} onSave={onSave} />
     </div>
   )
 }
@@ -93,11 +104,10 @@ const CompanyEditor = (props) => {
 
   return (
     <div className="App-AddCompany">
-      <div>Company Panel</div>
-      <div>Name: <input onChange={e => setName(e.target.value)} value={name}/></div>
+      <div className="addcompany-name">Name: <input onChange={e => setName(e.target.value)} value={name}/></div>
       <div>
-        <button onClick={onCancelClicked}>Cancel</button>
-        <button onClick={onSaveClicked}>Save</button>
+        <button className="addcompany-button" onClick={onCancelClicked}>Cancel</button>
+        <button className="addcompany-button" onClick={onSaveClicked}>Save</button>
       </div>
     </div>
   );
