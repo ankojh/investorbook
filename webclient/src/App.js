@@ -3,7 +3,8 @@ import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import './App.css';
 import AddCompany from './components/addCompany/AddCompany';
@@ -21,14 +22,12 @@ function App() {
 
   const { isWideScreen } = useContext(ResizeContext);
 
-
-
   return (
     <Router>
       <div className={`App ${isWideScreen ? 'wide-screen' : ''}`}>
         <AppBar position="static" className="App-header">
           <Toolbar>
-            InvestorBook
+            <span>InvestorBook</span>
         </Toolbar>
         </AppBar>
         <Switch>

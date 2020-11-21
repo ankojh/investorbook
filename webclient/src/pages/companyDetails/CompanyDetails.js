@@ -51,6 +51,7 @@ const CompanyDetails = () => {
         {
           companyDetails.investments && companyDetails.investments.map(investment => <CompanyInvestorCard key={investment.id} investment={investment} />)
         }
+        {(!companyDetails.investments || !companyDetails.investments.length) && <div style={{textAlign: 'center'}}>No Investor Found</div>}
       </div>
     </div>
   );

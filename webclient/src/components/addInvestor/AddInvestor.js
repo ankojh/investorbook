@@ -1,10 +1,11 @@
 import React from 'react';
+import './AddInvestor.css'
 
 const AddInvestor = () => {
   return (
-    <div>
+    <div className="App-NewInvestor"> 
       
-    </div>
+    </div>  
   );
 };
 
