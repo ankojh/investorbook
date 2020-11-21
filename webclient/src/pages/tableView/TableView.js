@@ -1,5 +1,6 @@
 import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import CompanyView from '../../components/companyView/CompanyView';
 import InvestorView from '../../components/investorView/InvestorView';
 import './TableView.css'
@@ -25,11 +26,13 @@ function TabPanel(props) {
 
 const TableView = () => {
 
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(0);
 
   function handleChange(e, newValue) {
     setTab(newValue)
   }
+
+  
 
   return (
     <div className="App-TableView">

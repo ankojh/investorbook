@@ -44,7 +44,8 @@ const CompanyView = () => {
           {data.company.map(company =>
             <TableRow key={company.id}>
               <TableCell> {company.name}</TableCell>
-              {!company.investments.length && <TableCell>No Investments Found</TableCell>}
+              {!company.investments.length && <TableCell>-</TableCell>}
+              {/* {!company.investments.length && <TableCell>No Investments Found</TableCell>} */}
               {company.investments.length ? <TableCell> {company.investments.map(({ investor }) => <span>{investor.name}, </span>)}</TableCell> : null}
             </TableRow>
           )}

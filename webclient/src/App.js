@@ -6,6 +6,8 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
+import AddCompany from './components/addCompany/AddCompany';
+import AddInvestor from './components/addInvestor/AddInvestor';
 import Investors from './Investors';
 import CompanyDetails from './pages/companyDetails/CompanyDetails';
 import InvestorDetails from './pages/investorDetails/InvestorDetails';
@@ -30,7 +32,25 @@ function App() {
           <Route path="/investor/:id">
             <InvestorDetails />
           </Route>
+
+          <Route path="/newinvestor">
+            <AddInvestor />
+          </Route>
+
+          <Route path="/newcompany">
+            <AddCompany />
+          </Route>
+          
+          <Route path="/investors">
+            <TableView />
+          </Route>
+          <Route path="/companies">
+            <TableView />
+          </Route>
           <Route path="/">
+            <TableView />
+          </Route>
+          <Route path="**">
             <TableView />
           </Route>
         </Switch>
