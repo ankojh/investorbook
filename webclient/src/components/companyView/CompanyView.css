@@ -1,0 +1,86 @@
+.company-view-loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.App-companyView .company-view-name,
+.App-companyView .company-view-investor {
+  color: #4050B5;
+  cursor: pointer;
+}
+
+
+.App-companyView .company-view-name:hover,
+.App-companyView .company-view-investor:hover,
+.App-companyView .company-view-seemore:hover {
+  text-decoration: underline
+}
+
+.App-companyView thead * {
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.App-companyView .company-view-seemore {
+  font-style: italic;
+  color: #883434;
+  cursor: pointer
+}
+
+.company-view-header {
+  margin: 20px;
+}
+
+.company-view-header .company-header-title {
+  font-size: 20px;
+  font-weight: bolder;
+  margin-right: 40px;
+}
+
+.company-view-pagenav {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+
+.company-view-pagenav button,
+.company-header-add,
+.company-add-investment {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #4050B5;
+  font-size: 15px;
+  border-radius: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px
+}
+
+.company-view-pagenav button:disabled {
+  background-color: rgb(211, 211, 211);
+}
+
+
+.company-view-pagenav button:hover,
+.company-header-add:hover,
+.company-add-investment:hover {
+  transition: 0.3s all;
+  cursor: pointer;
+  background-color: #4050B5;
+  color: white;
+}
+
+.company-view-pagenav button:disabled:hover {
+  background-color: rgb(211, 211, 211);
+  cursor: default;
+  color: rgb(163, 163, 163)
+}

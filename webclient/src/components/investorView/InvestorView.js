@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './InvestorView.css'
 import { useQuery, gql } from '@apollo/client';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { CircularProgress, Icon, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { ResizeContext } from '../../contexts/resizeContext';
 
 const GET_INVESTORS = gql`
-query getInvestors($limitBy: Int, $offsetBy:Int) {
+query getInvestors($limitBy: Int, $offsetBy:Int, $limitInvestments: Int) {
   investor(limit: $limitBy, offset: $offsetBy) {
-    investments {
+    investments(limit: $limitInvestments) {
       company {
         id
         name
@@ -20,15 +21,16 @@ query getInvestors($limitBy: Int, $offsetBy:Int) {
 }
 `;
 
-const PER_PAGE_LIMIT = 5;
-
 const InvestorView = () => {
   const [page, setPage] = useState(0);
+  const {isWideScreen} = useContext(ResizeContext);
+  const PER_PAGE_LIMIT = isWideScreen ? 7 : 5;
   const { loading, error, data } = useQuery(GET_INVESTORS,
     {
       variables: {
         limitBy: PER_PAGE_LIMIT,
-        offsetBy: PER_PAGE_LIMIT * page
+        offsetBy: PER_PAGE_LIMIT * page,
+        limitInvestments: isWideScreen ? 50: 10
       }
     });
   const history = useHistory();
@@ -56,19 +58,27 @@ const InvestorView = () => {
   }
 
   if (loading)
-    return (<div>Loading</div>)
+    return (<div className="investor-view-loader">
+        <span>Loading</span>
+        <CircularProgress/>
+      </div>)
   if (error)
-    return (<div>Error</div>)
+    return (
+      <div className="investor-view-loader">
+        <span>Error</span>
+      </div>
+    )
+
 
   return (
     <div className="App-InvestorView">
 
-      <div>
-        <span>Investors</span>
-        <button onClick={addInvestor}>Add Investor</button>
+      <div className="investor-view-header">
+        <span className="investor-header-title">Investors</span>
+        <button className="investor-header-add" onClick={addInvestor}>Add Investor</button>
       </div>
 
-      <Table stickyHeader>
+      <Table stickyHeader className="investor-view-tableheader">
         <TableHead>
           <TableRow>
             <TableCell>Avatar</TableCell>
@@ -87,10 +97,11 @@ const InvestorView = () => {
                   alt={investor.name}
                   width='50px' />
               </TableCell>
-              <TableCell> <span onClick={e => investorClicked(investor.id)}>{investor.name}</span></TableCell>
+              <TableCell> <span className="investor-view-name" onClick={e => investorClicked(investor.id)}>{investor.name}</span></TableCell>
               <TableCell>
                 {investor.investments.map(({ company }, index) =>
-                  <span key={company.id} onClick={e => companyClicked(company.id)}>{company.name}{index === investor.investments.length - 1 ? '' : ','} </span>)}
+                  <span className="investor-view-company" key={company.id} onClick={e => companyClicked(company.id)}>{company.name}{index === investor.investments.length - 1 ? '' : ','} </span>)}
+                  {!isWideScreen && investor.investments.length==10 && <span className="investor-view-seemore" onClick={e => investorClicked(investor.id)}>See More</span>}
               </TableCell>
             </TableRow>
           )}
@@ -98,10 +109,10 @@ const InvestorView = () => {
       </Table>
 
 
-      <div>
-        <button onClick={previousPageClicked}>Previous Page</button>
+      <div className="investor-view-pagenav">
+        <button disabled={!page} onClick={previousPageClicked}>Previous</button>
         page: {page + 1}
-        <button onClick={nextPageClicked}>Next Page</button>
+        <button onClick={nextPageClicked}>Next</button>
       </div>
     </div>
   );

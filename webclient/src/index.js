@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import ResizeContextProvider from './contexts/resizeContext';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8091/v1/graphql',
@@ -14,7 +15,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
+      <ResizeContextProvider>
       <App />
+      </ResizeContextProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

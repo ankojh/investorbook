@@ -1,5 +1,5 @@
 import { AppBar, Toolbar } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 import './App.css';
 import AddCompany from './components/addCompany/AddCompany';
+import AddInvestment from './components/addInvestment/AddInvestment';
 import AddInvestor from './components/addInvestor/AddInvestor';
+import ResizeContextProvider, { ResizeContext } from './contexts/resizeContext';
 import Investors from './Investors';
 import CompanyDetails from './pages/companyDetails/CompanyDetails';
 import InvestorDetails from './pages/investorDetails/InvestorDetails';
@@ -16,10 +18,14 @@ import TableView from './pages/tableView/TableView';
 
 
 function App() {
+
+  const { isWideScreen } = useContext(ResizeContext);
+
+
+
   return (
     <Router>
-      <div className="App">
-        {/* <Investors /> */}
+      <div className={`App ${isWideScreen ? 'wide-screen' : ''}`}>
         <AppBar position="static">
           <Toolbar>
             InvestorBook
@@ -40,6 +46,11 @@ function App() {
           <Route path="/newcompany">
             <AddCompany />
           </Route>
+
+          <Route path="/newinvestment">
+            <AddInvestment/>
+          </Route>
+
           
           <Route path="/investors">
             <TableView />

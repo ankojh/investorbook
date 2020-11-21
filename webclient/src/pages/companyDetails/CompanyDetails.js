@@ -35,7 +35,6 @@ const CompanyDetails = () => {
   }
 
   const companyDetails = data.company[0];
-  console.log(companyDetails);
   return (
     <div className="App-CompanyDetails">
       <div>Name: <span>{companyDetails.name}</span></div>    

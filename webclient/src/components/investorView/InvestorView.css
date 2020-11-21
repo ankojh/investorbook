@@ -1,0 +1,90 @@
+.App-InvestorView img{
+  cursor:pointer
+}
+
+.App-InvestorView .investor-view-name,
+.App-InvestorView .investor-view-company{
+  color: #4050B5;
+  cursor: pointer;
+}
+
+
+.App-InvestorView .investor-view-name:hover,
+.App-InvestorView .investor-view-company:hover,
+.App-InvestorView .investor-view-seemore:hover {
+  text-decoration: underline
+}
+
+.App-InvestorView thead *{
+  font-size:15px;
+  font-weight: bolder;
+}
+
+.App-InvestorView .investor-view-seemore{
+  font-style: italic;
+  color: #883434;
+  cursor:pointer
+}
+
+
+.investor-view-pagenav{
+  display: flex;
+  justify-content: center;
+  margin-top:10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+
+.investor-view-pagenav button,
+.investor-header-add {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #4050B5;
+  font-size: 15px;
+  border-radius: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding:5px;
+  padding-left: 10px;
+  padding-right: 10px
+}
+
+.investor-view-pagenav button:disabled{
+  background-color: rgb(211, 211, 211);
+}
+
+
+
+.investor-view-pagenav button:hover,
+.investor-header-add:hover {
+  transition: 0.3s all;
+  cursor: pointer;
+  background-color: #4050B5;
+  color: white;
+}
+
+.investor-view-pagenav button:disabled:hover {
+  background-color: rgb(211, 211, 211);
+  cursor: default;
+  color:rgb(163, 163, 163)
+}
+
+
+.investor-view-header{
+  margin: 20px;
+}
+
+.investor-view-header .investor-header-title{
+  font-size: 20px;
+  font-weight: bolder;
+  margin-right: 40px;
+}
+
+.investor-view-loader{
+  height:100vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
