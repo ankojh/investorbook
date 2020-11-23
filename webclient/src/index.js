@@ -10,7 +10,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 const client = new ApolloClient({
   uri: 'http://localhost:8091/v1/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions:{
+    watchQuery: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'all',
+    },
+  }
 });
 
 ReactDOM.render(

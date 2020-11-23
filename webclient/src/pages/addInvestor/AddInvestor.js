@@ -16,7 +16,9 @@ const GET_INVESTOR = gql`
 const SET_INVESTOR = gql`
 mutation SetInvestor($name: String, $photoLarge: String, $photoThumbnail: String) {
   insert_investor(objects: {name:$name, photo_large: $photoLarge, photo_thumbnail: $photoThumbnail}) {
-    affected_rows
+    returning {
+      id
+    }
   }
 }`;
 
@@ -45,9 +47,12 @@ const Investor = () => {
 const AddInvestor = () => {
 
   const [setInvestor] = useMutation(SET_INVESTOR);
+  const history = useHistory();
 
-  function onSave({ name, avatarURL }) {
-    setInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL } })
+  async function onSave({ name, avatarURL }) {
+    const response = await setInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL } })
+    const id = response.data['insert_investor']['returning'][0].id
+    history.push(`/investor/${id}`);
   }
   return (
     <div>
@@ -62,9 +67,12 @@ const EditInvestor = (props) => {
   const { loading, error, data } = useQuery(GET_INVESTOR, { variables: { id: props.investorID } })
   
   const [updateInvestor] = useMutation(UPDATE_INVESTOR);
+  const history = useHistory();
 
-  function onSave({ name, avatarURL }) {
-    updateInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL , id: props.investorID } });
+
+  async function onSave({ name, avatarURL }) {
+    await updateInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL , id: props.investorID } });
+    history.push(`/investor/${props.investorID}`)
   }
 
   return (
@@ -81,6 +89,8 @@ const InvestorEditor = (props) => {
   const [name, setName] = useState('')
   const [avatarURL, setAvatarURL] = useState('')
 
+  const history = useHistory();
+
   useEffect(() => {
     setName(name? name :props.name)
     setAvatarURL(avatarURL ? avatarURL : props.avatar)
@@ -91,8 +101,9 @@ const InvestorEditor = (props) => {
   }
 
   function onCancelClicked() {
-    setName(props.name);
-    setAvatarURL(props.avatar);
+    history.goBack();
+    // setName(props.name);
+    // setAvatarURL(props.avatar);
   }
 
 

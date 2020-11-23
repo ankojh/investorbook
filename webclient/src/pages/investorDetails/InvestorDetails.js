@@ -59,7 +59,6 @@ const InvestorDetails = (props) => {
 
   function deleteInvestment(investmentId){
     setDeleting({type:'Investment', id: investmentId});
-    console.log('here');
     setShowDialog(true);
   }
 
@@ -81,12 +80,14 @@ const InvestorDetails = (props) => {
     setShowDialog(false);
   }
 
-  function handleOk(){
+  async function handleOk(){
     if(deleting.type === 'Investor'){
-      deleteInvestorMutation({ variables: { id: deleting.id } });
+      await deleteInvestorMutation({ variables: { id: deleting.id } });
+      history.push('/')
     }
     else{
-      deleteInvestmentMutation({ variables: { id: deleting.id } });
+      alert('todo');
+      // deleteInvestmentMutation({ variables: { id: deleting.id } });
     }
     setShowDialog(false);
   }
@@ -97,6 +98,10 @@ const InvestorDetails = (props) => {
 
   if(error){
     return <div>Error</div>
+  }
+
+  if(!data){
+    return <div className="investor-details-message">No Investor Found</div>
   }
 
   const investor = data.investor[0];

@@ -14,9 +14,9 @@ import Investors from './Investors';
 import CompanyDetails from './pages/companyDetails/CompanyDetails';
 import InvestorDetails from './pages/investorDetails/InvestorDetails';
 import TableView from './pages/tableView/TableView';
-import UpdateCompany from './pages/updateCompany/UpdateCompany';
-import UpdateInvestment from './pages/updateInvestment/UpdateInvestment';
-import UpdateInvestor from './pages/updateInvestor/UpdateInvestor';
+// import UpdateCompany from './pages/updateCompany/UpdateCompany';
+// import UpdateInvestment from './pages/updateInvestment/UpdateInvestment';
+// import UpdateInvestor from './pages/updateInvestor/UpdateInvestor';
 import Investor from './pages/addInvestor/AddInvestor';
 
 

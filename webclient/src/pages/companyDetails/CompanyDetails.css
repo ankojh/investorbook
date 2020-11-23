@@ -89,3 +89,10 @@
   font-weight: bolder;
   margin:20px;
 }
+
+.company-details-error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

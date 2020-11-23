@@ -60,6 +60,10 @@ const CompanyDetails = () => {
     return <div></div>
   }
 
+  if(!data){
+    return <div className="company-details-error">No Company Found</div>
+  }
+
   function deleteCompany() {
     setDeleting({ type: 'Company', id: companyID });
     setShowDialog(true);
@@ -74,15 +78,19 @@ const CompanyDetails = () => {
     setShowDialog(false);
   }
 
-  function handleOk() {
+  async function handleOk() {
     if (deleting.type === 'Company') {
-      deleteCompanyMutation({ variables: { id: deleting.id } });
+      await deleteCompanyMutation({ variables: { id: deleting.id } });
+      history.push('/')
     }
     else {
-      deleteInvestmentMutation({ variables: { id: deleting.id } });
+      alert('todo');
+      // deleteInvestmentMutation({ variables: { id: deleting.id } });
     }
     setShowDialog(false);
   }
+
+
 
 
   const companyDetails = {...data.company[0]};

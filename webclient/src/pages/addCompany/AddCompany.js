@@ -15,7 +15,9 @@ const GET_COMPANY = gql`
 const SET_COMPANY = gql`
 mutation SetCompany($name: String) {
   insert_company(objects: {name:$name}) {
-    affected_rows
+    returning {
+      id
+    }
   }
 }`;
 
@@ -49,8 +51,9 @@ const AddCompany = () => {
     const history = useHistory();
 
     async function onSave({name}){
-      const id = await setCompany({variables: {name}})
-      history.push(`/company`)
+      const response= await setCompany({variables: {name}})
+      const id = response.data['insert_company']['returning'][0].id;
+      history.push(`/company/${id}`)
 
     }
 
@@ -88,6 +91,7 @@ const CompanyEditor = (props) => {
 
   const [name, setName] = useState('')
 
+  const history = useHistory();
 
   useEffect(() => {
     setName(name ? name : props.name)
@@ -98,7 +102,8 @@ const CompanyEditor = (props) => {
   }
 
   function onCancelClicked() {
-    setName(props.name);
+    // setName(props.name);
+    history.goBack();
   }
 
 
