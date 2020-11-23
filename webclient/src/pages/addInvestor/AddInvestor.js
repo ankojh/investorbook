@@ -50,9 +50,21 @@ const AddInvestor = () => {
   const [setInvestor] = useMutation(SET_INVESTOR);
   const history = useHistory();
   const [saveLoading, setSaveLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+
 
   async function onSave({ name, avatarURL }) {
     if (saveLoading) {
+      return;
+    }
+
+    if (!name) {
+      setErrorMsg('Name is Required');
+      return;
+    }
+
+    if (!avatarURL) {
+      setErrorMsg('Avatar is Required');
       return;
     }
     setSaveLoading(true);
@@ -64,7 +76,7 @@ const AddInvestor = () => {
   return (
     <div>
       <div className="addinvestor-header">Add Investor</div>
-      <InvestorEditor onSave={onSave} working={saveLoading} />
+      <InvestorEditor onSave={onSave} working={saveLoading} error={errorMsg}/>
     </div>
 
   )
@@ -76,12 +88,25 @@ const EditInvestor = (props) => {
   const [updateInvestor] = useMutation(UPDATE_INVESTOR);
   const history = useHistory();
   const [saveLoading, setSaveLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+
 
 
   async function onSave({ name, avatarURL }) {
     if(saveLoading){
       return;
     }
+
+    if(!name){
+      setErrorMsg('Name is Required');
+      return;
+    }
+
+    if (!avatarURL) {
+      setErrorMsg('Avatar is Required');
+      return;
+    }
+
     setSaveLoading(true);
     await updateInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL , id: props.investorID } });
     history.push(`/investor/${props.investorID}`)
@@ -95,7 +120,8 @@ const EditInvestor = (props) => {
         name={data ? data.investor[0].name : ''}
         avatar={data ? data.investor[0].photo_large : ''}
         onSave={onSave}
-        working={saveLoading} />
+        working={saveLoading}
+        error={errorMsg} />
     </div>
   )
 }
@@ -103,14 +129,16 @@ const EditInvestor = (props) => {
 
 
 const InvestorEditor = (props) => {
-  const [name, setName] = useState('')
-  const [avatarURL, setAvatarURL] = useState('')
+  const [name, setName] = useState(null)
+  const [avatarURL, setAvatarURL] = useState(null)
 
   const history = useHistory();
 
   useEffect(() => {
-    setName(name? name :props.name)
-    setAvatarURL(avatarURL ? avatarURL : props.avatar)
+    // setName(name? name :props.name)
+    // setAvatarURL(avatarURL ? avatarURL : props.avatar)
+    setName(props.name && name === null ? props.name : name);
+    setAvatarURL(props.avatar && avatarURL === null ? props.avatar : avatarURL);
   })
 
   function onSaveClicked() {
@@ -128,6 +156,7 @@ const InvestorEditor = (props) => {
     <div className="App-NewInvestor">
       <div className="addinvestor-name">Name: <input onChange={e => setName(e.target.value)} value={name} /></div>
       <div className="addinvestor-url">Avatar URL: <input onChange={e => setAvatarURL(e.target.value)} value={avatarURL} /></div>
+      {props.error && <div className="addinvestor-error">{props.error}</div>} 
       { !props.working && <div>
         <button className="addinvestor-button" onClick={onCancelClicked}>Cancel</button>
         <button className="addinvestor-button" onClick={onSaveClicked}>Save</button>

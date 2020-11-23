@@ -51,11 +51,19 @@ const AddCompany = () => {
     const [setCompany] = useMutation(SET_COMPANY);
     const [saveLoading, setSaveLoading] = useState(false);
     const history = useHistory();
+    const [errorMsg, setErrorMsg] = useState('')
 
     async function onSave({name}){
       if (saveLoading) {
         return;
+      } 
+
+      if(!name){
+        setErrorMsg('Name is required')
+        return;
       }
+
+
       setSaveLoading(true);
       const response= await setCompany({variables: {name}})
       const id = response.data['insert_company']['returning'][0].id;
@@ -67,7 +75,7 @@ const AddCompany = () => {
   return (
     <div>
       <div className="addcompany-header">Add Company</div>
-      <CompanyEditor onSave={onSave} name={''} working={saveLoading}/>
+      <CompanyEditor onSave={onSave} name={''} working={saveLoading} error={errorMsg}/>
     </div>
   )
 };
@@ -79,11 +87,19 @@ const EditCompany = (props)=>{
   const [saveLoading, setSaveLoading] = useState(false);
   const [updateCompany] = useMutation(UPDATE_COMPANY);
   const history = useHistory();
+  const [errorMsg, setErrorMsg] = useState('')
+
 
   async function onSave({name}){
     if (saveLoading) {
       return;
     }
+
+    if (!name) {
+      setErrorMsg('Name is required')
+      return;
+    }
+
     setSaveLoading(true);
     await updateCompany({variables: { id: props.companyID, name}});
     history.push(`/company/${props.companyID}`)
@@ -94,19 +110,20 @@ const EditCompany = (props)=>{
   return (
     <div>
       <div className="addcompany-header">Edit Company</div>
-      <CompanyEditor name={data ? data.company[0].name : ''} onSave={onSave} working={saveLoading} />
+      <CompanyEditor name={data ? data.company[0].name : ''} onSave={onSave} working={saveLoading} error={errorMsg} />
     </div>
   )
 }
 
 const CompanyEditor = (props) => {
 
-  const [name, setName] = useState('')
+  const [name, setName] = useState(null)
 
   const history = useHistory();
 
   useEffect(() => {
-    setName(name ? name : props.name)
+    // setName(name ? name : props.name)
+    setName(props.name && name === null ? props.name : name);
   })
 
   function onSaveClicked() {
@@ -122,6 +139,7 @@ const CompanyEditor = (props) => {
   return (
     <div className="App-AddCompany">
       <div className="addcompany-name">Name: <input onChange={e => setName(e.target.value)} value={name}/></div>
+      {props.error && <div className="addcompany-error">{props.error}</div>} 
       {!props.working && <div>
         <button className="addcompany-button" onClick={onCancelClicked}>Cancel</button>
         <button className="addcompany-button" onClick={onSaveClicked}>Save</button>

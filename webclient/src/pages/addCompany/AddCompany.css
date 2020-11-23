@@ -41,3 +41,7 @@
   border: 1px solid #4050B5;
   font-size: 16px;;
 }
+
+.addcompany-error{
+  color: red;
+}

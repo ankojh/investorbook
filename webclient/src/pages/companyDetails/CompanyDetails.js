@@ -60,7 +60,7 @@ const CompanyDetails = () => {
     return <div className="company-details-message">Error :(</div>
   }
 
-  if(!data){
+  if(!data || !data.company.length){
     return <div className="company-details-message">No Company Found</div>
   }
 
@@ -91,7 +91,7 @@ const CompanyDetails = () => {
   }
 
 
-
+  console.log(data);
 
   const companyDetails = {...data.company[0]};
   companyDetails.investments = [...companyDetails.investments].sort((a,b)=>b.amount - a.amount);

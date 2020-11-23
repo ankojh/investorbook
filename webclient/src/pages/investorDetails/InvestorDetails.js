@@ -100,7 +100,7 @@ const InvestorDetails = (props) => {
     return <div className="investor-details-message">Error :(</div>
   }
 
-  if(!data){
+  if (!data || !data.investor.length){
     return <div className="investor-details-message">No Investor Found :( </div>
   }
 
