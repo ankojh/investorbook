@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import './AddInvestor.css'
@@ -48,16 +49,22 @@ const AddInvestor = () => {
 
   const [setInvestor] = useMutation(SET_INVESTOR);
   const history = useHistory();
+  const [saveLoading, setSaveLoading] = useState(false);
 
   async function onSave({ name, avatarURL }) {
+    if (saveLoading) {
+      return;
+    }
+    setSaveLoading(true);
     const response = await setInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL } })
     const id = response.data['insert_investor']['returning'][0].id
     history.push(`/investor/${id}`);
+    setSaveLoading(false);
   }
   return (
     <div>
       <div className="addinvestor-header">Add Investor</div>
-      <InvestorEditor onSave={onSave} />
+      <InvestorEditor onSave={onSave} working={saveLoading} />
     </div>
 
   )
@@ -68,17 +75,27 @@ const EditInvestor = (props) => {
   
   const [updateInvestor] = useMutation(UPDATE_INVESTOR);
   const history = useHistory();
+  const [saveLoading, setSaveLoading] = useState(false);
 
 
   async function onSave({ name, avatarURL }) {
+    if(saveLoading){
+      return;
+    }
+    setSaveLoading(true);
     await updateInvestor({ variables: { name, photoLarge: avatarURL, photoThumbnail: avatarURL , id: props.investorID } });
     history.push(`/investor/${props.investorID}`)
+    setSaveLoading(false);
   }
 
   return (
     <div>
         <div className="addinvestor-header">Edit Investor</div>
-      <InvestorEditor name={data ? data.investor[0].name : ''} avatar={data ? data.investor[0].photo_large : ''} onSave={onSave} />
+      <InvestorEditor 
+        name={data ? data.investor[0].name : ''}
+        avatar={data ? data.investor[0].photo_large : ''}
+        onSave={onSave}
+        working={saveLoading} />
     </div>
   )
 }
@@ -111,10 +128,11 @@ const InvestorEditor = (props) => {
     <div className="App-NewInvestor">
       <div className="addinvestor-name">Name: <input onChange={e => setName(e.target.value)} value={name} /></div>
       <div className="addinvestor-url">Avatar URL: <input onChange={e => setAvatarURL(e.target.value)} value={avatarURL} /></div>
-      <div>
+      { !props.working && <div>
         <button className="addinvestor-button" onClick={onCancelClicked}>Cancel</button>
         <button className="addinvestor-button" onClick={onSaveClicked}>Save</button>
-      </div>
+      </div>}
+      {props.working && <CircularProgress />}
     </div>
   );
 }

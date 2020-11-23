@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import './CompanyDetails.css'
 import deleteIcon from '../../assets/delete-24px.svg'
 import updateIcon from '../../assets/create-24px.svg'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 const GET_COMPANY_DETAILS = gql`
 query MyQuery ($id: Int){
@@ -53,15 +53,15 @@ const CompanyDetails = () => {
   const [deleteCompanyMutation] = useMutation(DELETE_COMPANY);
   const [deleteInvestmentMutation] = useMutation(DELETE_INVESTMENT);
   if (loading) {
-    return <div></div>
+    return <div className="company-details-message">Loading <CircularProgress /></div>
   }
 
   if (error) {
-    return <div></div>
+    return <div className="company-details-message">Error :(</div>
   }
 
   if(!data){
-    return <div className="company-details-error">No Company Found</div>
+    return <div className="company-details-message">No Company Found</div>
   }
 
   function deleteCompany() {

@@ -90,7 +90,7 @@
   margin:20px;
 }
 
-.company-details-error{
+.company-details-message{
   display: flex;
   justify-content: center;
   align-items: center;

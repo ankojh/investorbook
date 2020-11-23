@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import './InvestorDetails.css';
 import deleteIcon from '../../assets/delete-24px.svg'
 import updateIcon from '../../assets/create-24px.svg'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 const GET_INVESTOR_DETAILS = gql`
 query MyQuery ($id: Int){
@@ -93,15 +93,15 @@ const InvestorDetails = (props) => {
   }
 
   if(loading){
-    return <div>Loading</div>
+    return <div className="investor-details-message">Loading <CircularProgress /></div>
   }
 
   if(error){
-    return <div>Error</div>
+    return <div className="investor-details-message">Error :(</div>
   }
 
   if(!data){
-    return <div className="investor-details-message">No Investor Found</div>
+    return <div className="investor-details-message">No Investor Found :( </div>
   }
 
   const investor = data.investor[0];

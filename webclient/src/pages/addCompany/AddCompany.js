@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import './AddCompany.css'
@@ -48,19 +49,25 @@ const Company = () => {
 const AddCompany = () => {
 
     const [setCompany] = useMutation(SET_COMPANY);
+    const [saveLoading, setSaveLoading] = useState(false);
     const history = useHistory();
 
     async function onSave({name}){
+      if (saveLoading) {
+        return;
+      }
+      setSaveLoading(true);
       const response= await setCompany({variables: {name}})
       const id = response.data['insert_company']['returning'][0].id;
       history.push(`/company/${id}`)
+      setSaveLoading(false);
 
     }
 
   return (
     <div>
       <div className="addcompany-header">Add Company</div>
-      <CompanyEditor onSave={onSave} name={''}/>
+      <CompanyEditor onSave={onSave} name={''} working={saveLoading}/>
     </div>
   )
 };
@@ -69,20 +76,25 @@ const AddCompany = () => {
 const EditCompany = (props)=>{
 
   const { loading, error, data } = useQuery(GET_COMPANY, { variables: { id: props.companyID } })
-
+  const [saveLoading, setSaveLoading] = useState(false);
   const [updateCompany] = useMutation(UPDATE_COMPANY);
   const history = useHistory();
 
   async function onSave({name}){
+    if (saveLoading) {
+      return;
+    }
+    setSaveLoading(true);
     await updateCompany({variables: { id: props.companyID, name}});
     history.push(`/company/${props.companyID}`)
+    setSaveLoading(false);
   }
 
 
   return (
     <div>
       <div className="addcompany-header">Edit Company</div>
-      <CompanyEditor name={data ? data.company[0].name : ''} onSave={onSave} />
+      <CompanyEditor name={data ? data.company[0].name : ''} onSave={onSave} working={saveLoading} />
     </div>
   )
 }
@@ -110,10 +122,11 @@ const CompanyEditor = (props) => {
   return (
     <div className="App-AddCompany">
       <div className="addcompany-name">Name: <input onChange={e => setName(e.target.value)} value={name}/></div>
-      <div>
+      {!props.working && <div>
         <button className="addcompany-button" onClick={onCancelClicked}>Cancel</button>
         <button className="addcompany-button" onClick={onSaveClicked}>Save</button>
-      </div>
+      </div> } 
+      {props.working && <CircularProgress />}
     </div>
   );
 }
